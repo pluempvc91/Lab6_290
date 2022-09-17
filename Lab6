@@ -1,0 +1,50 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int csum, msum, sum;
+
+void *runner(void *param);				/* the thread */
+
+int main(int argc, char *argv[]){
+	
+	if(argc != 2){
+		fprintf(stderr, "usage: pthread <integer value>\n");
+		exit(1);
+	}
+	if(atoi(argv[1]) < 0){
+		fprintf(stderr, "number must be >= 0\n");
+		exit(2);
+	}
+
+	pthread_t tid;					/* the thread identifier*/
+	pthread_attr_t attr;				/* set of attributes for the thread */
+	pthread_attr_init(&attr);			/* get the default attributes */
+	pthread_create(&tid, &attr, runner, argv[1]);	/* create the thread */
+
+	//printf("I am mother thread, I will wait for my child thread\n");
+	//printf("from my child (c)sum = %d\n", csum);
+	//pthread_join(tid, NULL);			/* now wait for the thread to exit */
+	
+	int i;
+	for(i = 1; i <= atoi(argv[1]); i++){
+		msum += i;
+	}
+
+	//printf("from my child (c)sum = %d\n", csum);
+	printf("from parent (m)sum = %d\n", msum);	
+	printf("sum = %d\n", msum - csum);
+
+	return 0;
+}
+
+void *runner(void *param){
+	int upper = atoi(param);
+	int i;
+	csum = 0;
+	for(i = 1; i <= (2 * upper); i++){
+		csum += i;
+	}
+	printf("from my child (c)sum = %d\n", csum);
+	pthread_exit(0);
+}
