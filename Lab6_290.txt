@@ -1,0 +1,11 @@
+from parent (m)sum = 3		แม่เสร็จก่อนลูกเลยจบโปรแกรมเลย
+sum = -7
+
+from my child (c)sum = 10		ลูกเสร็จก่อนแม่เลยได้ปริ้นออกมาก่อนโปรแกรมจบ
+from parent (m)sum = 3
+sum = -7
+
+from parent (m)sum = 3		!!??
+sum = -7
+from my child (c)sum = 10
+from my child (c)sum = 10
